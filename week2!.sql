@@ -58,6 +58,11 @@ order by total_sale desc
 limit 10;
 
 use w3schools;
-select OrderID, OrderDate, (SELECT SupplierName FROM suppliers
-WHERE SupplierName IN ('Tokyo Traders')) FROM orders;
-
+select * from orders where
+OrderID in
+(select OrderID from order_details
+WHERE ProductID in
+(select ProductID from products
+WHERE SupplierID in
+(select SupplierID from suppliers
+WHERE SupplierName = "Tokyo Traders")))
